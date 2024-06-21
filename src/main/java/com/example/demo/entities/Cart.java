@@ -59,5 +59,7 @@ public class Cart {
     @OneToMany(mappedBy = "cart")
     private Set<CartItem> cartItem = new HashSet<>();
 
+    public void add(CartItem item) {
+    }
 }
 
