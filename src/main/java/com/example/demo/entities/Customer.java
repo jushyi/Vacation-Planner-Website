@@ -20,7 +20,7 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     //added nullable = false to every field that requires input for part G
-    @Column(name = "customer_id", nullable = false)
+    @Column(name = "customer_id")
     @JsonProperty("id")
     private Long id;
 
