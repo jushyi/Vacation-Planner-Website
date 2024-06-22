@@ -20,7 +20,7 @@ public class CartItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cart_item_id")
+    @Column(name = "cart_item_id", nullable = false)
     private Long id;
 
     @ManyToOne
@@ -28,8 +28,16 @@ public class CartItem {
     @JsonProperty("vacation")
     private Vacation vacation;
 
+    /*
+    @ManyToMany
+    @JoinTable(
+            name = "excursion_cartitem",
+            joinColumns = @JoinColumn(name = "cart_item_id"),
+            inverseJoinColumns = @JoinColumn(name = "excursion_id")
+    )
+    private Set<Excursion> excursions = new HashSet<>();
+*/
     @ManyToMany(mappedBy = "cartitems")
-    @JsonProperty("excursions")
     private Set<Excursion> excursions = new HashSet<>();
 
     @ManyToOne

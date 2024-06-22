@@ -20,11 +20,11 @@ public class Division {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "division_id")
+    @Column(name = "division_id", nullable = false)
     @JsonProperty("id")
     private Long id;
 
-    @Column(name = "division")
+    @Column(name = "division", nullable = false)
     @JsonProperty("division_name")
     private String division_name;
 

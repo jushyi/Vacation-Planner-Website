@@ -32,6 +32,7 @@ public class CheckoutServiceImpl implements CheckoutService {
     @Transactional
     public PurchaseResponse placeOrder(Purchase purchase) {
 
+
         //retrieve the cart
         Cart cart = purchase.getCart();
 
@@ -39,26 +40,28 @@ public class CheckoutServiceImpl implements CheckoutService {
         String orderTrackingNumber = generateOrderTrackingNumber();
         cart.setOrderTrackingNumber(orderTrackingNumber);
 
-        //set cartitems
-        Set<CartItem> cartitems = purchase.getCartitems();
-        cartitems.forEach(item -> cart.add(item));
-
-        //set the cartitems to the cart and set the customer to the cart
-        cart.setCartItem(purchase.getCartitems());
-        cart.setCustomer(purchase.getCustomer());
-
-        //retrieve the customer. add cart to the customer
-        Customer customer = purchase.getCustomer();
-        customer.add(cart);
+        //set cartItem
+        Set<CartItem> cartItems = purchase.getCartItems();
+        cartItems.forEach(item -> cart.add(item));
 
         //set the cart status to ordered
         cart.setStatus(StatusType.ordered);
 
-        //save customer to the customer repository
-        customerRepository.save(customer);
+        //retrieve the customer. add cart to the customer. saves cart
+        Customer customer = purchase.getCustomer();
+        cartRepository.save(cart);
+        customer.add(cart);
 
         //return message
-        return new PurchaseResponse(orderTrackingNumber);
+        if (purchase.getCart() == null || purchase.getCartItems().isEmpty()){
+
+            String errorMessage = "Cart is empty or null";
+            return new PurchaseResponse(errorMessage);
+        }
+        else {
+            return new PurchaseResponse(orderTrackingNumber);
+        }
+
     }
 
     private String generateOrderTrackingNumber() {
