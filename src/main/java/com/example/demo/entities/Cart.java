@@ -1,9 +1,10 @@
 package com.example.demo.entities;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -16,7 +17,8 @@ import java.util.Set;
 @Table(name = "carts")
 @Getter
 @Setter
-@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 
 public class Cart {
 
@@ -56,9 +58,17 @@ public class Cart {
     private Customer customer;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
-    private Set<CartItem> cartItem = new HashSet<>();
+    private Set<CartItem> cart_items = new HashSet<>();
 
     public void add(CartItem item) {
+
+        if (item != null) {
+            if (cart_items == null) {
+                cart_items = new HashSet<>();
+            }
+            cart_items.add(item);
+            item.setCart(this);
+        }
     }
 }
 

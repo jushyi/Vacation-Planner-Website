@@ -2,7 +2,9 @@ package com.example.demo.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -16,6 +18,8 @@ import java.util.Set;
 @Table(name = "vacations")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 
 public class Vacation {
 
@@ -49,6 +53,6 @@ public class Vacation {
     @UpdateTimestamp
     private Date last_update;
 
-    @OneToMany(mappedBy = "vacation")
+    @OneToMany(mappedBy = "vacation", cascade = CascadeType.ALL)
     private Set<Excursion> excursions = new HashSet<>();
 }

@@ -44,13 +44,15 @@ public class CheckoutServiceImpl implements CheckoutService {
         Set<CartItem> cartItems = purchase.getCartItems();
         cartItems.forEach(item -> cart.add(item));
 
+
+        //retrieve the customer. add cart to the customer.
+        Customer customer = purchase.getCustomer();
+        customer.add(cart);
+        //customerRepository.save(customer);
+
         //set the cart status to ordered
         cart.setStatus(StatusType.ordered);
-
-        //retrieve the customer. add cart to the customer. saves cart
-        Customer customer = purchase.getCustomer();
         cartRepository.save(cart);
-        customer.add(cart);
 
         //return message
         if (purchase.getCart() == null || purchase.getCartItems().isEmpty()){

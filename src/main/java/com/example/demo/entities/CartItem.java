@@ -2,7 +2,9 @@ package com.example.demo.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -15,6 +17,8 @@ import java.util.Set;
 @Table(name = "cart_items")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 
 public class CartItem {
 
@@ -28,7 +32,7 @@ public class CartItem {
     @JsonProperty("vacation")
     private Vacation vacation;
 
-    /*
+
     @ManyToMany
     @JoinTable(
             name = "excursion_cartitem",
@@ -36,9 +40,10 @@ public class CartItem {
             inverseJoinColumns = @JoinColumn(name = "excursion_id")
     )
     private Set<Excursion> excursions = new HashSet<>();
-*/
-    @ManyToMany(mappedBy = "cartitems")
-    private Set<Excursion> excursions = new HashSet<>();
+
+    // @ManyToMany(mappedBy = "cartitems")
+    // @JsonProperty("excursions")
+    // private Set<Excursion> excursions = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "cart_id")
